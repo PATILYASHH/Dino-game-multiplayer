@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dino Run - Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="game-page">
+    <div class="game-ui">
+        <div class="game-header">
+            <div class="game-info">
+                <div class="score-display">
+                    <span class="label">Score</span>
+                    <span class="score" id="score">0</span>
+                </div>
+                <div class="high-score-display">
+                    <span class="label">Best</span>
+                    <span class="high-score" id="high-score">0</span>
+                </div>
+            </div>
+            <div class="game-controls">
+                <button class="control-btn" id="admin-btn" title="Admin Settings" style="display: none;">⚙️</button>
+                <button class="control-btn" id="pause-btn">⏸️</button>
+                <button class="control-btn" onclick="window.location.href='index.html'">🏠</button>
+            </div>
+        </div>
+
+        <div class="game-canvas-container">
+            <canvas id="game-canvas" width="1200" height="400"></canvas>
+            <div class="game-overlay" id="game-overlay">
+                <div class="overlay-content">
+                    <h2 id="overlay-title">Game Over!</h2>
+                    <div class="overlay-stats">
+                        <div class="stat">
+                            <span class="stat-label">Final Score</span>
+                            <span class="stat-value" id="final-score">0</span>
+                        </div>
+                        <div class="stat" id="multiplayer-stats" style="display: none;">
+                            <span class="stat-label">Your Rank</span>
+                            <span class="stat-value" id="player-rank">#1</span>
+                        </div>
+                    </div>
+                    <div class="overlay-actions">
+                        <button class="action-btn primary" id="restart-btn">Play Again</button>
+                        <button class="action-btn secondary" onclick="window.location.href='index.html'">Main Menu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="multiplayer-panel" id="multiplayer-panel" style="display: none;">
+            <div class="panel-header">
+                <h3>Live Players</h3>
+                <div class="connection-indicator" id="mp-connection">
+                    <div class="status-dot connected"></div>
+                </div>
+            </div>
+            <div class="live-players" id="live-players"></div>
+        </div>
+
+        <!-- Admin Controls -->
+        <div class="admin-panel" id="admin-panel" style="display: none;">
+            <div class="panel-header">
+                <h3>🔧 Admin Settings</h3>
+                <button class="close-btn" id="close-admin-btn">×</button>
+            </div>
+            <div class="admin-content">
+                <div class="admin-row">
+                    <label>Difficulty:</label>
+                    <select id="difficulty-select" class="admin-select">
+                        <option value="easy">Easy (Slow)</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="hard">Hard (Fast)</option>
+                        <option value="extreme">Extreme</option>
+                    </select>
+                </div>
+                <div class="admin-row">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="has-endpoint"> 
+                        <span>Set End Point</span>
+                    </label>
+                </div>
+                <div class="admin-row" id="endpoint-row" style="display: none;">
+                    <label>End Point Score:</label>
+                    <input type="number" id="endpoint-score" value="1000" min="100" max="10000" step="100" class="admin-input">
+                </div>
+                <div class="admin-actions">
+                    <button id="apply-settings-btn" class="action-btn primary">Apply Settings</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-instructions">
+            <div class="instruction">
+                <span class="key">SPACE</span>
+                <span>Jump over obstacles</span>
+            </div>
+            <div class="instruction" id="mobile-instruction" style="display: none;">
+                <span class="key">TAP</span>
+                <span>Jump over obstacles</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

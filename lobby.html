@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplayer Lobby - Dino Run</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="lobby-page">
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo-small">
+                <span class="dino-icon">🦕</span>
+                <span>Dino Run</span>
+            </div>
+            <button class="nav-btn" onclick="window.location.href='index.html'">← Back to Home</button>
+        </div>
+    </nav>
+
+    <div class="lobby-container">
+        <div class="lobby-panel">
+            <div class="panel-header">
+                <h2>Multiplayer Lobby</h2>
+                <div class="connection-status" id="connection-status">
+                    <div class="status-dot disconnected"></div>
+                    <span>Disconnected</span>
+                </div>
+            </div>
+
+            <div class="lobby-setup">
+                <div class="input-group">
+                    <label for="player-name">Your Name</label>
+                    <input type="text" id="player-name" placeholder="Enter your name" maxlength="20" />
+                </div>
+
+                <div class="input-group">
+                    <label for="lobby-code">Lobby Code</label>
+                    <input type="text" id="lobby-code" placeholder="Enter code or leave blank to create" maxlength="10" />
+                </div>
+
+                <div class="input-group">
+                    <label for="player-color">Dino Color</label>
+                    <div class="color-picker-container">
+                        <input type="color" id="player-color" value="#2563eb" />
+                        <div class="color-preview" id="color-preview"></div>
+                    </div>
+                </div>
+
+                <button class="lobby-btn primary" id="join-create-btn">Join / Create Lobby</button>
+            </div>
+
+            <div class="lobby-room" id="lobby-room" style="display: none;">
+                <div class="room-info">
+                    <div class="room-code">
+                        <span class="label">Room Code:</span>
+                        <span class="code" id="current-lobby-code">ABC123</span>
+                        <button class="copy-btn" onclick="copyLobbyCode()">📋</button>
+                    </div>
+                </div>
+
+                <div class="players-section">
+                    <h3>Players <span id="player-count">(0/8)</span></h3>
+                    <div class="players-grid" id="players-grid"></div>
+                </div>
+
+                <div class="ready-section">
+                    <button class="ready-btn" id="ready-toggle">Ready Up!</button>
+                    <button class="start-btn" id="start-game-btn" style="display: none;">Start Game</button>
+                </div>
+
+                <button class="lobby-btn secondary" id="leave-lobby-btn">Leave Lobby</button>
+            </div>
+        </div>
+
+        <div class="lobby-preview">
+            <div class="preview-canvas">
+                <canvas id="preview" width="400" height="200"></canvas>
+            </div>
+            <div class="preview-info">
+                <h3>Game Preview</h3>
+                <p>Watch your dino run and jump over obstacles in real-time multiplayer action!</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="lobby.js"></script>
+</body>
+</html>

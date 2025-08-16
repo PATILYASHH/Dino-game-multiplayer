@@ -1,0 +1,28 @@
+{
+  "name": "dino-game-2.0",
+  "version": "1.0.0",
+  "description": "Enhanced multiplayer Dino racing game with WebSocket support",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build": "echo 'Static files ready for deployment'",
+    "vercel-build": "echo 'Building for Vercel deployment'"
+  },
+  "keywords": [
+    "dino",
+    "game",
+    "multiplayer",
+    "websocket",
+    "racing",
+    "browser-game"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^8.13.0"
+  },
+  "engines": {
+    "node": ">=16.x"
+  }
+}
