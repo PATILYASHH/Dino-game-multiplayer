@@ -5,9 +5,9 @@
   "main": "index.html",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js",
-    "build": "echo 'Static files ready for deployment'",
-    "vercel-build": "echo 'Building for Vercel deployment'"
+    "dev": "node server.js", 
+    "build": "npm run vercel-build",
+    "vercel-build": "node -e \"const fs=require('fs'); const path=require('path'); if(!fs.existsSync('public')) fs.mkdirSync('public'); ['index.html','lobby.html','game.html','styles.css','game.js','lobby.js','config.js'].forEach(f=>{if(fs.existsSync(f)) fs.copyFileSync(f,path.join('public',f))});\""
   },
   "keywords": [
     "dino",
