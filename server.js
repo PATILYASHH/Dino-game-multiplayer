@@ -1,6 +1,45 @@
-// Simple WebSocket server using Node.js and ws
+// Simple WebSocket server using Node.js and ws with HTTP server
 const WebSocket = require('ws');
-const server = new WebSocket.Server({ port: 8080 });
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
+
+// Create HTTP server
+const httpServer = http.createServer((req, res) => {
+    let filePath = '';
+    
+    // Route handling
+    if (req.url === '/') {
+        filePath = path.join(__dirname, 'index.html');
+    } else if (req.url === '/lobby') {
+        filePath = path.join(__dirname, 'lobby.html');
+    } else if (req.url === '/game') {
+        filePath = path.join(__dirname, 'game.html');
+    } else {
+        // Serve static files
+        filePath = path.join(__dirname, req.url);
+    }
+    
+    // Check if file exists
+    if (fs.existsSync(filePath)) {
+        const ext = path.extname(filePath);
+        const contentType = {
+            '.html': 'text/html',
+            '.css': 'text/css', 
+            '.js': 'application/javascript',
+            '.json': 'application/json'
+        }[ext] || 'text/plain';
+        
+        res.writeHead(200, { 'Content-Type': contentType });
+        res.end(fs.readFileSync(filePath));
+    } else {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end('File not found');
+    }
+});
+
+// Create WebSocket server using the HTTP server
+const server = new WebSocket.Server({ server: httpServer });
 
 // lobbies: Map<lobbyId, Map<playerId, { ws, color, ready, playerName }>>
 const lobbies = new Map();
@@ -209,5 +248,9 @@ server.on('error', (error) => {
     console.error('Server error:', error);
 });
 
-console.log('WebSocket server running on ws://localhost:8080');
-console.log('Visit http://localhost or open index.html to start playing!');
+// Start the HTTP server
+httpServer.listen(8080, () => {
+    console.log('WebSocket server running on ws://localhost:8080');
+    console.log('HTTP server running on http://localhost:8080');
+    console.log('Visit http://localhost:8080 to start playing!');
+});
