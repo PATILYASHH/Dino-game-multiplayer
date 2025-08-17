@@ -2,7 +2,7 @@
 
 A modern, professional multiplayer Chrome-style Dino game with real-time WebSocket racing.
 
-🎮 **[Live Demo on Vercel](https://your-dino-game.vercel.app)** (Add your URL after deployment)
+🎮 **[Live Demo on Netlify](https://your-dino-game.netlify.app)** (Add your URL after deployment)
 
 ## Features
 
@@ -14,19 +14,23 @@ A modern, professional multiplayer Chrome-style Dino game with real-time WebSock
 - ⚡ **Professional UI**: Modern, attractive interface with animations
 - 🧊 **Smart Collision**: 5-second freeze instead of game over
 
-## 🚀 Vercel Deployment Guide
+## 🚀 Netlify Deployment Guide
 
-### Frontend Deployment (Vercel)
+### Frontend Deployment (Netlify)
 1. **Fork/Clone this repository**
-2. **Connect to Vercel**:
-   - Go to [vercel.com](https://vercel.com)
-   - Import your GitHub repository
-   - Vercel will auto-detect and deploy the static files
-3. **Domain**: Your game will be live at `https://your-project.vercel.app`
+2. **Connect to Netlify**:
+   - Go to [netlify.com](https://netlify.com)
+   - Click "New site from Git"
+   - Connect your GitHub account and select the repository
+   - Netlify will auto-detect build settings:
+     - Build command: `npm run build`
+     - Publish directory: `dist`
+   - Deploy the site
+3. **Domain**: Your game will be live at `https://your-project.netlify.app`
 
 ### WebSocket Server Deployment Options
 
-Since Vercel doesn't support WebSocket servers, choose one of these options:
+Since Netlify doesn't support WebSocket servers, choose one of these options:
 
 #### Option A: Railway (Recommended)
 1. Go to [railway.app](https://railway.app)

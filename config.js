@@ -5,6 +5,9 @@ const CONFIG = {
         ? 'wss://your-websocket-server.railway.app' // Replace with your deployed WebSocket server
         : 'ws://localhost:8080', // Local development
     
+    // Deployment platform
+    PLATFORM: 'netlify',
+    
     // Game settings
     GAME_VERSION: '2.0.0',
     MAX_PLAYERS: 8,

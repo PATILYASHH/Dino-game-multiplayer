@@ -49,3 +49,7 @@ logs
 
 # Vercel
 .vercel
+
+# Netlify
+.netlify/
+dist/
