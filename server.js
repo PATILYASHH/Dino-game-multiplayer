@@ -251,10 +251,10 @@ server.on('error', (error) => {
 });
 
 // Start the HTTP server
-httpServer.listen(8082, '127.0.0.1', () => {
-    console.log('WebSocket server running on ws://localhost:8082');
-    console.log('HTTP server running on http://localhost:8082');
-    console.log('Visit http://localhost:8082 to start playing!');
+httpServer.listen(3000, '127.0.0.1', () => {
+    console.log('WebSocket server running on ws://localhost:3000');
+    console.log('HTTP server running on http://localhost:3000');
+    console.log('Visit http://localhost:3000 to start playing!');
 }).on('error', (err) => {
     console.error('❌ Server failed to start:', err);
     process.exit(1);

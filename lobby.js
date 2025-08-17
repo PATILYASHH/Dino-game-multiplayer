@@ -131,7 +131,7 @@ class LobbyManager {
         
         try {
             // Use config-based WebSocket URL for deployment flexibility
-            const wsUrl = window.DINO_CONFIG ? window.DINO_CONFIG.WEBSOCKET_URL : 'ws://localhost:8082';
+            const wsUrl = window.DINO_CONFIG ? window.DINO_CONFIG.WEBSOCKET_URL : 'ws://localhost:3000';
             this.ws = new WebSocket(wsUrl);
             
             this.ws.addEventListener('open', () => {
