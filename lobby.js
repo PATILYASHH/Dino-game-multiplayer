@@ -1,6 +1,10 @@
 // Lobby management and WebSocket connection
 class LobbyManager {
     constructor() {
+        console.log('LobbyManager const        try {
+            // Use config-based WebSocket URL for deployment flexibility
+            const wsUrl = window.DINO_CONFIG ? window.DINO_CONFIG.WEBSOCKET_URL : 'ws://localhost:8082';
+            this.ws = new WebSocket(wsUrl); called');
         this.ws = null;
         this.playerId = this.generatePlayerId();
         this.playerName = '';
@@ -12,9 +16,11 @@ class LobbyManager {
         this.connectionRetries = 0;
         this.maxRetries = 5;
         
+        console.log('Initializing elements...');
         this.initializeElements();
         this.setupEventListeners();
         this.initPreviewCanvas();
+        console.log('LobbyManager setup complete');
     }
     
     generatePlayerId() {
@@ -125,7 +131,7 @@ class LobbyManager {
         
         try {
             // Use config-based WebSocket URL for deployment flexibility
-            const wsUrl = window.DINO_CONFIG ? window.DINO_CONFIG.WEBSOCKET_URL : 'ws://localhost:8080';
+            const wsUrl = window.DINO_CONFIG ? window.DINO_CONFIG.WEBSOCKET_URL : 'ws://localhost:8082';
             this.ws = new WebSocket(wsUrl);
             
             this.ws.addEventListener('open', () => {
@@ -235,6 +241,7 @@ class LobbyManager {
     }
     
     joinOrCreateLobby() {
+        console.log('joinOrCreateLobby called');
         this.playerName = this.elements.playerNameInput.value.trim();
         if (!this.playerName) {
             alert('Please enter your name');
@@ -242,6 +249,7 @@ class LobbyManager {
         }
         
         this.currentLobbyCode = this.elements.lobbyCodeInput.value.trim() || this.generateLobbyCode();
+        console.log('Connecting to lobby:', this.currentLobbyCode);
         this.connectWebSocket();
         
         // Show lobby room

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Test</title>
+</head>
+<body>
+    <h1>WebSocket Test</h1>
+    <div id="status">Not connected</div>
+    <button id="connect">Connect WebSocket</button>
+    <button id="send">Send Test Message</button>
+    <div id="messages"></div>
+
+    <script>
+        let ws = null;
+        const statusEl = document.getElementById('status');
+        const messagesEl = document.getElementById('messages');
+
+        document.getElementById('connect').addEventListener('click', () => {
+            console.log('Attempting WebSocket connection...');
+            statusEl.textContent = 'Connecting...';
+            
+            ws = new WebSocket('ws://localhost:8080');
+            
+            ws.onopen = () => {
+                console.log('WebSocket connected!');
+                statusEl.textContent = 'Connected';
+                statusEl.style.color = 'green';
+            };
+            
+            ws.onmessage = (event) => {
+                console.log('Message received:', event.data);
+                const div = document.createElement('div');
+                div.textContent = `Received: ${event.data}`;
+                messagesEl.appendChild(div);
+            };
+            
+            ws.onclose = () => {
+                console.log('WebSocket closed');
+                statusEl.textContent = 'Disconnected';
+                statusEl.style.color = 'red';
+            };
+            
+            ws.onerror = (error) => {
+                console.error('WebSocket error:', error);
+                statusEl.textContent = 'Error';
+                statusEl.style.color = 'red';
+            };
+        });
+
+        document.getElementById('send').addEventListener('click', () => {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                const testMessage = {
+                    type: 'join',
+                    lobbyId: 'TEST123',
+                    playerId: 'testplayer',
+                    playerName: 'Test Player',
+                    color: '#2563eb'
+                };
+                console.log('Sending test message:', testMessage);
+                ws.send(JSON.stringify(testMessage));
+            } else {
+                alert('WebSocket not connected');
+            }
+        });
+    </script>
+</body>
+</html>

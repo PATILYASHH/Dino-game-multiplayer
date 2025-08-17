@@ -3,7 +3,7 @@ const CONFIG = {
     // WebSocket server URL - change this after deploying your WebSocket server
     WEBSOCKET_URL: window.location.protocol === 'https:' 
         ? 'wss://your-websocket-server.railway.app' // Replace with your deployed WebSocket server
-        : 'ws://localhost:8080', // Local development
+        : 'ws://localhost:8082', // Local development
     
     // Deployment platform
     PLATFORM: 'netlify',
