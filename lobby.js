@@ -164,13 +164,50 @@ class LobbyManager {
             
             this.ws.addEventListener('error', (error) => {
                 console.error('WebSocket error:', error);
-                this.updateConnectionStatus('error', 'Connection Error');
+                
+                // Check if this is likely a server deployment issue
+                const wsUrl = window.DINO_CONFIG ? window.DINO_CONFIG.WEBSOCKET_URL : '';
+                if (wsUrl.includes('DEPLOY-YOUR-SERVER-FIRST') || wsUrl.includes('your-project')) {
+                    this.updateConnectionStatus('error', '⚠️ WebSocket Server Not Deployed');
+                    this.showServerDeploymentMessage();
+                } else {
+                    this.updateConnectionStatus('error', 'Connection Error');
+                }
             });
             
         } catch (error) {
             console.error('Failed to create WebSocket connection:', error);
             this.updateConnectionStatus('error', 'Failed to Connect');
         }
+    }
+    
+    showServerDeploymentMessage() {
+        // Create deployment help message
+        const helpMessage = document.createElement('div');
+        helpMessage.style.cssText = `
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: #ff4444; color: white; padding: 20px; border-radius: 10px;
+            max-width: 500px; text-align: center; z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        `;
+        helpMessage.innerHTML = `
+            <h3>🚨 WebSocket Server Not Deployed</h3>
+            <p><strong>Multiplayer requires a separate server deployment.</strong></p>
+            <p>1. Deploy server.js to Railway/Render/Heroku<br>
+            2. Update config.js with your server URL<br>
+            3. Push changes to GitHub</p>
+            <button onclick="this.parentElement.remove()" style="margin-top: 10px; padding: 8px 16px; background: white; color: #ff4444; border: none; border-radius: 5px; cursor: pointer;">
+                Close
+            </button>
+        `;
+        document.body.appendChild(helpMessage);
+        
+        // Auto-remove after 10 seconds
+        setTimeout(() => {
+            if (helpMessage.parentElement) {
+                helpMessage.remove();
+            }
+        }, 10000);
     }
     
     sendMessage(type, data) {
