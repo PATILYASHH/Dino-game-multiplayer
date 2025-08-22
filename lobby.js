@@ -184,22 +184,27 @@ class LobbyManager {
     showServerDeploymentMessage() {
         // Create deployment help message
         const helpMessage = document.createElement('div');
-        helpMessage.style.cssText = `
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: #ff4444; color: white; padding: 20px; border-radius: 10px;
-            max-width: 500px; text-align: center; z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        `;
-        helpMessage.innerHTML = `
-            <h3>🚨 WebSocket Server Not Deployed</h3>
-            <p><strong>Multiplayer requires a separate server deployment.</strong></p>
-            <p>1. Deploy server.js to Railway/Render/Heroku<br>
-            2. Update config.js with your server URL<br>
-            3. Push changes to GitHub</p>
-            <button onclick="this.parentElement.remove()" style="margin-top: 10px; padding: 8px 16px; background: white; color: #ff4444; border: none; border-radius: 5px; cursor: pointer;">
-                Close
-            </button>
-        `;
+        helpMessage.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #ff4444; color: white; padding: 20px; border-radius: 10px; max-width: 500px; text-align: center; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.3);';
+        
+        const title = document.createElement('h3');
+        title.textContent = '🚨 WebSocket Server Not Deployed';
+        
+        const message1 = document.createElement('p');
+        message1.innerHTML = '<strong>Multiplayer requires a separate server deployment.</strong>';
+        
+        const message2 = document.createElement('p');
+        message2.innerHTML = '1. Deploy server.js to Railway/Render/Heroku<br>2. Update config.js with your server URL<br>3. Push changes to GitHub';
+        
+        const closeButton = document.createElement('button');
+        closeButton.textContent = 'Close';
+        closeButton.style.cssText = 'margin-top: 10px; padding: 8px 16px; background: white; color: #ff4444; border: none; border-radius: 5px; cursor: pointer;';
+        closeButton.onclick = () => helpMessage.remove();
+        
+        helpMessage.appendChild(title);
+        helpMessage.appendChild(message1);
+        helpMessage.appendChild(message2);
+        helpMessage.appendChild(closeButton);
+        
         document.body.appendChild(helpMessage);
         
         // Auto-remove after 10 seconds
