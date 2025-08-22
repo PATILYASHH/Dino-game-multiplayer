@@ -1,10 +1,6 @@
 // Lobby management and WebSocket connection
 class LobbyManager {
     constructor() {
-        console.log('LobbyManager const        try {
-            // Use config-based WebSocket URL for deployment flexibility
-            const wsUrl = window.DINO_CONFIG ? window.DINO_CONFIG.WEBSOCKET_URL : 'ws://localhost:8082';
-            this.ws = new WebSocket(wsUrl); called');
         this.ws = null;
         this.playerId = this.generatePlayerId();
         this.playerName = '';

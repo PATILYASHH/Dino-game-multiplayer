@@ -53,3 +53,9 @@ logs
 # Netlify
 .netlify/
 dist/
+
+# Debug files
+debug-server.js
+test-websocket.js
+test-client.js
+test-8082.js

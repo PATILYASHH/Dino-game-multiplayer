@@ -7,7 +7,7 @@
     "start": "node server.js",
     "dev": "node server.js", 
     "build": "npm run netlify-build",
-    "netlify-build": "node -e \"const fs=require('fs'); const path=require('path'); if(!fs.existsSync('dist')) fs.mkdirSync('dist'); ['index.html','lobby.html','game.html','styles.css','game.js','lobby.js','config.js'].forEach(f=>{if(fs.existsSync(f)) fs.copyFileSync(f,path.join('dist',f))});\""
+    "netlify-build": "node -e \"const fs=require('fs'); const path=require('path'); if(!fs.existsSync('dist')) fs.mkdirSync('dist'); ['index.html','lobby.html','game.html','styles.css','game.js','lobby.js','config.js','_redirects'].forEach(f=>{if(fs.existsSync(f)) fs.copyFileSync(f,path.join('dist',f))});\""
   },
   "keywords": [
     "dino",

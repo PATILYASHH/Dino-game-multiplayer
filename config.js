@@ -1,8 +1,8 @@
 // Configuration for deployment
 const CONFIG = {
-    // WebSocket server URL - change this after deploying your WebSocket server
+    // WebSocket server URL - UPDATE THIS after deploying your WebSocket server
     WEBSOCKET_URL: window.location.protocol === 'https:' 
-        ? 'wss://your-websocket-server.railway.app' // Replace with your deployed WebSocket server
+        ? 'wss://dino-websocket-server.railway.app' // REPLACE with your actual WebSocket server URL
         : 'ws://localhost:3000', // Local development
     
     // Deployment platform

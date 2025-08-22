@@ -4,6 +4,15 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
+// Add process error handlers for stability
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
 // Create HTTP server
 const httpServer = http.createServer((req, res) => {
     let filePath = '';
