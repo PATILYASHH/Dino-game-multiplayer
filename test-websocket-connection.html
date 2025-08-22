@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Connection Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 WebSocket Server Test</h1>
+    
+    <div class="test-box">
+        <h3>Test Your Deployed WebSocket Server</h3>
+        <input type="text" id="serverUrl" placeholder="https://your-server.railway.app" style="width: 300px;">
+        <button onclick="testConnection()">Test Connection</button>
+        
+        <div id="results"></div>
+    </div>
+    
+    <div class="test-box">
+        <h3>Quick Deploy Links:</h3>
+        <p><strong>Railway:</strong> <a href="https://railway.app/new" target="_blank">Deploy to Railway</a></p>
+        <p><strong>Render:</strong> <a href="https://render.com/new/repo" target="_blank">Deploy to Render</a></p>
+        <p><strong>Heroku:</strong> <a href="https://heroku.com/deploy" target="_blank">Deploy to Heroku</a></p>
+    </div>
+
+    <script>
+        function testConnection() {
+            const serverUrl = document.getElementById('serverUrl').value.trim();
+            const resultsDiv = document.getElementById('results');
+            
+            if (!serverUrl) {
+                resultsDiv.innerHTML = '<div class="status error">Please enter a server URL</div>';
+                return;
+            }
+            
+            resultsDiv.innerHTML = '<div class="status info">Testing connection...</div>';
+            
+            try {
+                // Convert HTTP to WebSocket URL
+                const wsUrl = serverUrl.replace(/^https:/, 'wss:').replace(/^http:/, 'ws:');
+                
+                const ws = new WebSocket(wsUrl);
+                let connected = false;
+                
+                const timeout = setTimeout(() => {
+                    if (!connected) {
+                        ws.close();
+                        resultsDiv.innerHTML = `
+                            <div class="status error">❌ Connection timeout</div>
+                            <p>Possible issues:</p>
+                            <ul>
+                                <li>Server not deployed yet</li>
+                                <li>Wrong URL</li>
+                                <li>Server starting up (wait 30 seconds)</li>
+                            </ul>
+                        `;
+                    }
+                }, 10000);
+                
+                ws.onopen = () => {
+                    connected = true;
+                    clearTimeout(timeout);
+                    resultsDiv.innerHTML = `
+                        <div class="status success">✅ Connection successful!</div>
+                        <p><strong>WebSocket URL:</strong> ${wsUrl}</p>
+                        <p>✨ Ready to update config.js with this URL</p>
+                    `;
+                    ws.close();
+                };
+                
+                ws.onerror = (error) => {
+                    clearTimeout(timeout);
+                    resultsDiv.innerHTML = `
+                        <div class="status error">❌ Connection failed</div>
+                        <p>Error details: ${error.message || 'WebSocket connection failed'}</p>
+                        <p>Make sure your server is deployed and running.</p>
+                    `;
+                };
+                
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="status error">❌ Invalid URL format</div>
+                    <p>Please use format: https://your-server.railway.app</p>
+                `;
+            }
+        }
+        
+        // Auto-fill with common deployment URLs
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlInput = document.getElementById('serverUrl');
+            urlInput.placeholder = 'https://your-project-name.railway.app';
+        });
+    </script>
+</body>
+</html>
